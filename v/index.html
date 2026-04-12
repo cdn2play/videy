@@ -231,6 +231,50 @@ footer a{
 </style>
 </head>
 <body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const gate = document.getElementById("ageGate");
+    if (!gate) return;
+
+    // kalau sudah pernah klik
+    if (localStorage.getItem("ageVerified") === "true") {
+        gate.style.display = "none";
+        document.body.style.overflow = "auto";
+    } else {
+        gate.style.display = "flex";
+        document.body.style.overflow = "hidden";
+    }
+
+});
+
+// ✅ GLOBAL FUNCTION (ANTI BLOCK)
+function confirmAge(){
+    const gate = document.getElementById("ageGate");
+
+    if(gate){
+        gate.style.display = "none";
+    }
+
+    document.body.style.overflow = "auto";
+
+    localStorage.setItem("ageVerified", "true");
+}
+
+</script>
+<div id="ageGate" class="age-gate">
+  <div class="age-box">
+    <h2>🔞 Age Verification</h2>
+    <p>This content is restricted to adults (18+).</p>
+    <p>Are you 18 years or older?</p>
+
+    <div class="age-btns">
+      <button onclick="confirmAge()">Yes, I am 18+</button>
+      <button onclick="exitAge()">Leave</button>
+    </div>
+  </div>
+</div>
+
 <header class="main-header">
 <div class="header-content">
 <a href="../" class="logo">videy</a>
